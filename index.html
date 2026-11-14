@@ -1,1 +1,168 @@
-Molay Browser
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molay Browser</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f111a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* شريط العنوان والتبويبات */
+        .top-bar {
+            background-color: #1a1d2d;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #2a2e45;
+        }
+        .nav-btns button {
+            background: transparent;
+            border: none;
+            color: #a0a5c0;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .nav-btns button:hover {
+            background-color: #2a2e45;
+            color: #fff;
+        }
+        .url-bar {
+            flex: 1;
+            display: flex;
+            background-color: #0f111a;
+            border-radius: 20px;
+            padding: 6px 15px;
+            border: 1px solid #2a2e45;
+        }
+        .url-bar input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+            direction: ltr;
+        }
+        /* منطقة العرض الرئيسية */
+        .main-view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a1f35 0%, #0f111a 100%);
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        .search-box {
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            background: #1a1d2d;
+            border-radius: 30px;
+            padding: 12px 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border: 1px solid #2f3552;
+        }
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        .shortcuts {
+            display: flex;
+            gap: 20px;
+            margin-top: 35px;
+        }
+        .shortcut {
+            background: #1a1d2d;
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #cbd5e1;
+            border: 1px solid #2a2e45;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .shortcut:hover {
+            transform: translateY(-3px);
+            border-color: #3a7bd5;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="nav-btns">
+            <button onclick="history.back()">&#8594;</button>
+            <button onclick="history.forward()">&#8592;</button>
+            <button onclick="location.reload()">&#8635;</button>
+        </div>
+        <div class="url-bar">
+            <input type="text" id="urlInput" placeholder="ابحث في جوجل أو اكتب رابط الموقع..." onkeypress="handleUrl(event)">
+        </div>
+    </div>
+
+    <div class="main-view">
+        <div class="logo">Molay Browser</div>
+        <div class="search-box">
+            <input type="text" id="mainSearch" placeholder="وش حاب تبحث عنه اليوم؟" onkeypress="handleMainSearch(event)">
+        </div>
+        <div class="shortcuts">
+            <a href="https://www.google.com" class="shortcut">Google</a>
+            <a href="https://www.youtube.com" class="shortcut">YouTube</a>
+            <a href="https://github.com" class="shortcut">GitHub</a>
+            <a href="https://x.com" class="shortcut">X</a>
+        </div>
+    </div>
+
+    <script>
+        function navigate(query) {
+            if (!query) return;
+            if (query.startsWith('http://') || query.startsWith('https://')) {
+                window.location.href = query;
+            } else if (query.includes('.') && !query.includes(' ')) {
+                window.location.href = 'https://' + query;
+            } else {
+                window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+            }
+        }
+
+        function handleUrl(e) {
+            if (e.key === 'Enter') navigate(document.getElementById('urlInput').value);
+        }
+
+        function handleMainSearch(e) {
+            if (e.key === 'Enter') navigate(document.getElementById('mainSearch').value);
+        }
+    </script>
+
+</body>
+</html>
